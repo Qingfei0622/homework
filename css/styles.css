@@ -11019,3 +11019,24 @@ header.masthead h1, header.masthead .h1 {
   transform:scale(1.08);
 
 }
+
+
+.instagram-link{
+
+  font-size:55px;
+
+  color:#555;
+
+  transition:.35s;
+
+  text-decoration:none;
+
+}
+
+.instagram-link:hover{
+
+  color:#E1306C;
+
+  transform:scale(1.25);
+
+}
