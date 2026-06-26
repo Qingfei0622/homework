@@ -187,26 +187,26 @@
                         <form id="contactForm"  >
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="name">稱呼</label>
                                 <div class="invalid-feedback" data-sb-feedback="name:required">必填。</div>
                             </div>
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                <input class="form-control" id="email"  name="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
                                 <label for="email">Email</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">需要提供電子郵件地址。</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">電子郵件地址無效。</div>
                             </div>
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                                <input class="form-control" id="phone" name="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
                                 <label for="phone">電話號碼</label>
                                 <div class="invalid-feedback" data-sb-feedback="phone:required">必填。</div>
                             </div>
                             <!-- Message input-->
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+                                <textarea class="form-control" id="message" name="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
                                 <label for="message">訊息</label>
                                 <div class="invalid-feedback" data-sb-feedback="message:required">必填。</div>
                             </div>
@@ -258,84 +258,45 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script>
+            document.getElementById("contactForm").addEventListener("submit", function (e) {
 
+                e.preventDefault();
 
-            document
-                .getElementById("contactForm")
-                .addEventListener("submit", function(e){
+                // 建立隱藏 form
+                const form = document.createElement("form");
 
-                    e.preventDefault();
+                form.method = "POST";
+                form.action = "https://script.google.com/macros/s/AKfycbzS4WLlgxLl3UGtM3n6V1oyziDbk0iUw28M8EmQocvTvjFFogUlqbgAvlnzRhmM3gBR/exec";
+                form.target = "hidden_iframe";
 
-                    fetch(scriptURL,{
-                        method:"POST",
-                        body:JSON.stringify({
+                function addField(name, value) {
+                    const input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = name;
+                    input.value = value;
+                    form.appendChild(input);
+                }
 
-                            name:document.getElementById("name").value,
+                addField("name", document.getElementById("name").value);
+                addField("email", document.getElementById("email").value);
+                addField("phone", document.getElementById("phone").value);
+                addField("message", document.getElementById("message").value);
 
-                            email:document.getElementById("email").value,
+                document.body.appendChild(form);
 
-                            phone:document.getElementById("phone").value,
+                form.submit();
 
-                            message:document.getElementById("message").value
+                setTimeout(() => {
 
-                        })
+                    document.getElementById("contactForm").reset();
 
-                    })
-                        .then(res=>res.json())
-                        .then(data=>{
+                    document.body.removeChild(form);
 
-                            alert("送出成功！");
+                    alert("送出成功！");
 
-                            document
-                                .getElementById("contactForm")
-                                .reset();
-
-                        })
-                        .catch(err=>{
-
-                            alert("送出失敗");
-
-                        });
-
-                });
-
+                },2000);
+            });
         </script>
     </body>
-    <script>
-        document.getElementById("contactForm").addEventListener("submit", function (e) {
 
-            e.preventDefault();
-
-            // 建立隱藏 form
-            const form = document.createElement("form");
-
-            form.method = "POST";
-            form.action = "https://script.google.com/macros/s/AKfycbzS4WLlgxLl3UGtM3n6V1oyziDbk0iUw28M8EmQocvTvjFFogUlqbgAvlnzRhmM3gBR/exec";
-            form.target = "hidden_iframe";
-
-            function addField(name, value) {
-                const input = document.createElement("input");
-                input.type = "hidden";
-                input.name = name;
-                input.value = value;
-                form.appendChild(input);
-            }
-
-            addField("name", document.getElementById("name").value);
-            addField("email", document.getElementById("email").value);
-            addField("phone", document.getElementById("phone").value);
-            addField("message", document.getElementById("message").value);
-
-            document.body.appendChild(form);
-
-            form.submit();
-
-            setTimeout(function () {
-                alert("送出成功！");
-                document.getElementById("contactForm").reset();
-                document.body.removeChild(form);
-            }, 1000);
-
-        });
-    </script>
 </html>
