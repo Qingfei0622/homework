@@ -184,7 +184,7 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form id="contactForm" target="hidden_iframe" >
+                        <form id="contactForm"  >
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
@@ -259,7 +259,6 @@
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script>
 
-            const scriptURL = "https://script.google.com/macros/s/AKfycbzS4WLlgxLl3UGtM3n6V1oyziDbk0iUw28M8EmQocvTvjFFogUlqbgAvlnzRhmM3gBR/exec";
 
             document
                 .getElementById("contactForm")
@@ -301,41 +300,42 @@
                 });
 
         </script>
-        <script src="js/scripts.js"></script>
-        <script>
+    </body>
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function (e) {
 
-            const scriptURL="https://script.google.com/macros/s/AKfycbzS4WLlgxLl3UGtM3n6V1oyziDbk0iUw28M8EmQocvTvjFFogUlqbgAvlnzRhmM3gBR/exec";
+            e.preventDefault();
 
-            document.getElementById("contactForm").onsubmit=function(e){
+            // 建立隱藏 form
+            const form = document.createElement("form");
 
-                e.preventDefault();
+            form.method = "POST";
+            form.action = "https://script.google.com/macros/s/AKfycbzS4WLlgxLl3UGtM3n6V1oyziDbk0iUw28M8EmQocvTvjFFogUlqbgAvlnzRhmM3gBR/exec";
+            form.target = "hidden_iframe";
 
-                const form=new FormData();
-
-                form.append("name",
-                    document.getElementById("name").value);
-
-                form.append("email",
-                    document.getElementById("email").value);
-
-                form.append("phone",
-                    document.getElementById("phone").value);
-
-                form.append("message",
-                    document.getElementById("message").value);
-
-                fetch(scriptURL,{
-                    method:"POST",
-                    mode:"no-cors",
-                    body:form
-                });
-
-                alert("送出成功！");
-
-                this.reset();
-
+            function addField(name, value) {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = name;
+                input.value = value;
+                form.appendChild(input);
             }
 
-        </script>
-    </body>
+            addField("name", document.getElementById("name").value);
+            addField("email", document.getElementById("email").value);
+            addField("phone", document.getElementById("phone").value);
+            addField("message", document.getElementById("message").value);
+
+            document.body.appendChild(form);
+
+            form.submit();
+
+            setTimeout(function () {
+                alert("送出成功！");
+                document.getElementById("contactForm").reset();
+                document.body.removeChild(form);
+            }, 1000);
+
+        });
+    </script>
 </html>
