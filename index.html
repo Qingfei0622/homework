@@ -227,7 +227,7 @@
                             <!-- an error submitting the form-->
                             <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">錯誤訊息</div></div>
                             <!-- Submit Button-->
-                            <div class="d-grid"><button class="btn btn-primary btn-xl " id="submitButton" type="submit">送出</button></div>
+                            <div class="d-grid"><button type="submit" class="btn btn-primary btn-xl " id="submitButton" type="submit">送出</button></div>
                         </form>
                         <iframe
                                 name="hidden_iframe"
@@ -266,7 +266,7 @@
                 const form = document.createElement("form");
 
                 form.method = "POST";
-                form.action = "https://script.google.com/macros/s/AKfycbzS4WLlgxLl3UGtM3n6V1oyziDbk0iUw28M8EmQocvTvjFFogUlqbgAvlnzRhmM3gBR/exec";
+                form.action = "https://script.google.com/macros/library/d/17JBO1eecLJ4bKEa6iB8DegWF5WUjF4EnMKU3RPzd1Sgw-GG5bEi41Viw/1";
                 form.target = "hidden_iframe";
 
                 function addField(name, value) {
